@@ -5,7 +5,7 @@ const connect = require('../lib/utils/connect.js');
 
 const request = require('supertest'); 
 const app = require('../lib/app'); 
-// const Organization = require('../lib/models/Organization'); 
+const Organization = require('../lib/models/Organization'); 
 
 describe('organization routes', () => {
 
@@ -44,8 +44,22 @@ describe('organization routes', () => {
 
   });
 
-
   // the get all route will be used to see all organizations (_id, title, and imageUrl of organization only)
+  it('can get all organizations via GET', async() => {
+    return Organization.create({
+      title: 'Environmental Voter Project 1',
+      description: 'description1',
+      imageUrl: 'image1.com'
+    })
+      .then(() => request(app).get('/api/v1/organizations'))
+      .then(res => { 
+        expect(res.body).toEqual([{
+          __id: expect.anything(),
+          title: 'Environmental Voter Project 1',
+          imageUrl: 'image1.com'
+        }]);
+      });
+  });
 
   // the get by id route will be used to get details about an organization
 
