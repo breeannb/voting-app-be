@@ -91,7 +91,7 @@ describe('organization routes', () => {
       .then(organization => {
         return request(app)
           .patch(`/api/v1/organizations/${organization._id}`)
-          .send({ description: 'description2', imageURL: 'image2.com' });
+          .send({ description: 'description2', imageUrl: 'image2.com' });
       })
       .then(res => {
         expect(res.body).toEqual({
@@ -105,4 +105,22 @@ describe('organization routes', () => {
   });
   // the delete route will be used if an organization is disbanded
 
+  it('deletes an organization by id via DELETE', () => {
+    return Organization.create(
+      { 
+        title: 'Environmental Voter Project 1', 
+        description: 'description1', 
+        imageUrl: 'image1.com',
+      })
+      .then(organization => request(app).delete(`api/v1/organization/${organization._id}`))
+      .then(res => { 
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          title: 'Environmental Voter Project 1', 
+          description: 'description1', 
+          imageUrl: 'image1.com',
+          __v: 0
+        });
+      });
+  });
 }); 
