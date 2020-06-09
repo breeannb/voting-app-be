@@ -68,7 +68,7 @@ describe('organization routes', () => {
       description: 'description1', 
       imageUrl: 'image1.com', 
     })
-      .then(organization => request(app).get(`/api/v1/organization/${organization._id}`))
+      .then(organization => request(app).get(`/api/v1/organizations/${organization._id}`))
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
