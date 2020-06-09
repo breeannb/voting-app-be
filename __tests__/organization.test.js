@@ -62,6 +62,24 @@ describe('organization routes', () => {
 
   // the get by id route will be used to get details about an organization
 
+  it('gets an organization by id with GET', () => {
+    return Organization.create({
+      title: 'Environmental Voter Project 1', 
+      description: 'description1', 
+      imageUrl: 'image1.com', 
+    })
+      .then(organization => request(app).get(`/api/v1/organization/${organization._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          title: 'Environmental Voter Project 1', 
+          description: 'description1', 
+          imageUrl: 'image1.com',
+          __v: 0
+        });
+      });
+
+  }); 
   // the update route will be used to update organization information
 
   // the delete route will be used if an organization is disbanded
