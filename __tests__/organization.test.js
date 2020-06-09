@@ -90,8 +90,8 @@ describe('organization routes', () => {
     })
       .then(organization => {
         return request(app)
-          .patch(`api/v1/organizations/${organization._id}`)
-          .send({ description: 'description2', imageURL: 'image2'})
+          .patch(`/api/v1/organizations/${organization._id}`)
+          .send({ description: 'description2', imageURL: 'image2.com' });
       })
       .then(res => {
         expect(res.body).toEqual({
