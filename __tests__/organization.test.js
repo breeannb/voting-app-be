@@ -41,21 +41,20 @@ describe('organization routes', () => {
           __v: 0
         });
       });
-
   });
 
   // the get all route will be used to see all organizations (_id, title, and imageUrl of organization only)
-  it('can get all organizations via GET', async() => {
+  it('gets all organizations via GET', () => {
     return Organization.create({
-      title: 'Environmental Voter Project 1',
-      description: 'description1',
-      imageUrl: 'image1.com'
+      title: 'Environmental Voter Project 1', 
+      description: 'description1', 
+      imageUrl: 'image1.com', 
     })
       .then(() => request(app).get('/api/v1/organizations'))
-      .then(res => { 
+      .then(res => {
         expect(res.body).toEqual([{
-          __id: expect.anything(),
-          title: 'Environmental Voter Project 1',
+          _id: expect.anything(),
+          title: 'Environmental Voter Project 1', 
           imageUrl: 'image1.com'
         }]);
       });
