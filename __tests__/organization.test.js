@@ -24,7 +24,22 @@ describe('organization routes', () => {
   });
 
   it('creates an organization via POST', () => {
-    
+    return request(app)
+      .post('/api/v1/votes/organization')
+      .send({
+        title: 'Environmental Voter Project 1',
+        description: 'description1',
+        imageUrl: 'image1.com'
+      })
+      .then (res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          title: 'Environmental Voter Project 1', 
+          description: 'description1', 
+          imageUrl: 'image1.com', 
+          __v: 0
+        });
+      });
 
   });
 
