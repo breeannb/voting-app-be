@@ -5,7 +5,7 @@ const connect = require('../lib/utils/connect.js');
 
 const request = require('supertest'); 
 const app = require('../lib/app'); 
-const Organization = require('../lib/models/Organization'); 
+// const Organization = require('../lib/models/Organization'); 
 
 describe('organization routes', () => {
 
@@ -26,7 +26,7 @@ describe('organization routes', () => {
   //   the create route will be used when a new organization is created
   it('creates an organization via POST', () => {
     return request(app)
-      .post('/api/v1/votes/organization')
+      .post('/api/v1/organizations')
       .send({
         title: 'Environmental Voter Project 1',
         description: 'description1',
@@ -50,7 +50,7 @@ describe('organization routes', () => {
   // the get by id route will be used to get details about an organization
 
   // the update route will be used to update organization information
-  
+
   // the delete route will be used if an organization is disbanded
 
 }); 
