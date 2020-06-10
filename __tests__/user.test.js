@@ -85,6 +85,7 @@ describe('user routes', () => {
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           communicationMedium: 'email',
+          __v: 0
         });
       });
   });
