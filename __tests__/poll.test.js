@@ -75,7 +75,7 @@ describe('poll routes', () => {
   }); 
 
   // the get by id route will be used to get details about a poll (populate organization information)
-  it('gets a pizza by id via GET', () => {
+  it('gets a poll by id via GET', () => {
     return Poll.create({
       organization: organization._id,
       title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
@@ -102,6 +102,35 @@ describe('poll routes', () => {
   });
   
   // the update route will be used to update a polls title and/or description
+  it('updates a poll by id via PATCH', () => {
+    return Poll.create({
+      organization: organization._id,
+      title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+      description: 'A vote for the Owls, please give a Hoot', 
+      options: 'Yes', 
+      __v: 0
+    })
+      .then(poll => {
+        return request(app)
+          .patch(`/api/v1/poll/${poll._id}`)
+          .send({ title: 'A Whole New Title', description: 'A Whole New Description' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          organization: {
+            _id: organization.id,
+            title: 'Environmental Organization for Voters',
+            description: 'A Voting Party for Environmental Factors',
+            imageUrl: 'image1.com'
+          },
+          title: 'A Whole New Title',
+          description: 'A Whole New Description', 
+          options: 'Yes',
+          __v: 0
+        });
+      });
+  });
   
   // the delete route will be used to remove a poll
 
