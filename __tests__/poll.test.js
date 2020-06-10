@@ -74,12 +74,36 @@ describe('poll routes', () => {
       });
   }); 
 
+  // the get by id route will be used to get details about a poll (populate organization information)
+  it('gets a pizza by id via GET', () => {
+    return Poll.create({
+      organization: organization._id,
+      title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+      description: 'A vote for the Owls, please give a Hoot', 
+      options: 'Yes', 
+      __v: 0
+    })
+      .then(pizza => request(app).get(`/api/v1/pizzas/${pizza._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          organization: {
+            _id: organization.id,
+            title: 'Environmental Organization for Voters',
+            description: 'A Voting Party for Environmental Factors',
+            imageUrl: 'image1.com'
+          },
+          title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+          description: 'A vote for the Owls, please give a Hoot', 
+          options: 'Yes',
+          __v: 0
+        });
+      });
+  });
+  
+  // the update route will be used to update a polls title and/or description
+  
+  // the delete route will be used to remove a poll
+
+
 });
-
-
-
-// the get by id route will be used to get details about a poll (populate organization information)
-
-// the update route will be used to update a polls title and/or description
-
-// the delete route will be used to remove a poll
