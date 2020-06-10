@@ -30,7 +30,7 @@ describe('user routes', () => {
       email: 'bolinskybm10@gmail.com',
       communicationMedium: 'email'
     })
-      .then(user => request(app).get(`api/v1/users/${user._id}`))
+      .then(user => request(app).get(`/api/v1/users/${user._id}`))
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
