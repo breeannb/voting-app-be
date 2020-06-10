@@ -43,7 +43,7 @@ describe('user routes', () => {
       });
   });
 
-  // the update route will be used to update organization information
+  // the update route will be used to update user information
   it('updates user by id using PATCH', () => {
     return User.create({
       name: 'Breeann B',
@@ -68,4 +68,24 @@ describe('user routes', () => {
       });
   });
 
+  // the delete route will be used if a user chooses to leave the platform
+  it('deletes an user by id via DELETE', () => {
+    return User.create(
+      { 
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        communicationMedium: 'email'
+      })
+      .then(user => request(app).delete(`/api/v1/users/${user._id}`))
+      .then(res => { 
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          communicationMedium: 'email',
+        });
+      });
+  });
 }); 
