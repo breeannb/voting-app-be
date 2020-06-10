@@ -43,7 +43,6 @@ describe('user routes', () => {
       });
   });
 
-  // the update route will be used to update user information
   it('updates user by id using PATCH', () => {
     return User.create({
       name: 'Breeann B',
@@ -68,7 +67,6 @@ describe('user routes', () => {
       });
   });
 
-  // the delete route will be used if a user chooses to leave the platform
   it('deletes an user by id via DELETE', () => {
     return User.create(
       { 

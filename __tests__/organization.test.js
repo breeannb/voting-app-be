@@ -23,7 +23,6 @@ describe('organization routes', () => {
     return mongod.stop();
   });
 
-  //   the create route will be used when a new organization is created
   it('creates an organization via POST', () => {
     return request(app)
       .post('/api/v1/organizations')
@@ -43,7 +42,6 @@ describe('organization routes', () => {
       });
   });
 
-  // the get all route will be used to see all organizations (_id, title, and imageUrl of organization only)
   it('gets all organizations via GET', () => {
     return Organization.create({
       title: 'Environmental Voter Project 1', 
@@ -59,8 +57,6 @@ describe('organization routes', () => {
         }]);
       });
   });
-
-  // the get by id route will be used to get details about an organization
 
   it('gets an organization by id with GET', () => {
     return Organization.create({
@@ -81,7 +77,6 @@ describe('organization routes', () => {
 
   }); 
   
-  // the update route will be used to update organization information
   it('updates organization by id using PATCH', () => {
     return Organization.create({
       title: 'Environmental Voter Project 1', 
@@ -103,7 +98,6 @@ describe('organization routes', () => {
         });
       });
   });
-  // the delete route will be used if an organization is disbanded
 
   it('deletes an organization by id via DELETE', () => {
     return Organization.create(
