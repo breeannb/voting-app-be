@@ -24,9 +24,25 @@ describe('poll routes', () => {
     return mongod.stop();
   });
 
+  // the create route will be used to create a new poll
   it('', () => {
     return request(app)
   }); 
+
+  
+
+  // the get all route will be used to see all polls for an organization (_id and title only)
+  //   it('', () => {
+  //     return request(app)
+  //   }); 
+
+  // the get by id route will be used to get details about a poll (populate organization information)
+
+  // the update route will be used to update a polls title and/or description
+
+  // the delete route will be used to remove a poll
+
+
 
 }); 
 
