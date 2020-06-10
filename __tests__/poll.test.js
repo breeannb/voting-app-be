@@ -27,7 +27,7 @@ describe('poll routes', () => {
       imageUrl: 'image1.com'
     });
   });
-  console.log(organization);
+
   afterAll(async() => {
     await mongoose.connection.close();
     return mongod.stop();
@@ -41,7 +41,7 @@ describe('poll routes', () => {
         organization: organization._id,
         title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
         description: 'A vote for the Owls, please give a Hoot', 
-        options: ['Yes'], 
+        options: 'Yes', 
         __v: 0
       })
       .then(res => {
@@ -50,7 +50,7 @@ describe('poll routes', () => {
           organization: organization.id,
           title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
           description: 'A vote for the Owls, please give a Hoot', 
-          options: ['Yes'], 
+          options: 'Yes', 
           __v: 0
         });
       });
