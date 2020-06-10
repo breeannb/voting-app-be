@@ -5,7 +5,7 @@ const connect = require('../lib/utils/connect');
 
 const request = require('supertest'); 
 const app = require('../lib/app'); 
-// const Poll = require('../lib/models/Poll'); 
+const Poll = require('../lib/models/Poll'); 
 const Organization = require('../lib/models/Organization'); 
 
 describe('poll routes', () => {
@@ -56,12 +56,27 @@ describe('poll routes', () => {
       });
   });
 
+  // the get all route will be used to see all polls for an organization (_id and title only)
+  it('gets all polls via GET', () => {
+    return Poll.create({
+      organization: organization._id,
+      title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+      description: 'A vote for the Owls, please give a Hoot', 
+      options: 'Yes', 
+      __v: 0
+    })
+      .then(() => request(app).get('/api/v1/polls'))
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: expect.anything(), 
+          title: 'A Poll to Save Older Forests, the Owl\'s Habitat'
+        }]);
+      });
+  }); 
+
 });
 
-// the get all route will be used to see all polls for an organization (_id and title only)
-//   it('', () => {
-//     return request(app)
-//   }); 
+
 
 // the get by id route will be used to get details about a poll (populate organization information)
 
