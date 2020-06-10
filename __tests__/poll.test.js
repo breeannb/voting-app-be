@@ -83,7 +83,7 @@ describe('poll routes', () => {
       options: 'Yes', 
       __v: 0
     })
-      .then(pizza => request(app).get(`/api/v1/pizzas/${pizza._id}`))
+      .then(poll => request(app).get(`/api/v1/polls/${poll._id}`))
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
