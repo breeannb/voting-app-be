@@ -25,8 +25,22 @@ describe('poll routes', () => {
   });
 
   // the create route will be used to create a new poll
-  it('', () => {
+  it('creates a poll via POST', () => {
     return request(app)
+      .post('./api/v1/polls')
+      .send({
+        title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+        description: 'A vote for the Owls, please give a Hoot', 
+        Options: 'Yes'
+      })
+      .then( res => { 
+        expect(res.body).toEqual({
+          _id: expect.anything(), 
+          title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+          description: 'A vote for the Owls, please give a Hoot', 
+          Options: ['Yes'],
+        });
+      });
   }); 
 
   
