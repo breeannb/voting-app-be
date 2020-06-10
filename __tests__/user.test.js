@@ -43,5 +43,29 @@ describe('user routes', () => {
       });
   });
 
+  // the update route will be used to update organization information
+  it('updates user by id using PATCH', () => {
+    return User.create({
+      name: 'Breeann B',
+      phone: '(570)404-5230', 
+      email: 'bolinskybm10@gmail.com',
+      communicationMedium: 'email'
+    })
+      .then(user => {
+        return request(app)
+          .patch(`/api/v1/users/${user._id}`)
+          .send({ communicationMedium: 'phone' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          communicationMedium: 'phone',
+          __v: 0
+        });
+      });
+  });
 
 }); 
