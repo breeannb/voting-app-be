@@ -17,13 +17,6 @@ describe('organization routes', () => {
   beforeEach(() => {
     return mongoose.connection.dropDatabase();
   });
-  
-  // let poll; 
-  // beforeEach(async() => {
-  //   poll = await poll.create({
-  //     create
-  //   });
-  // }); 
 
   afterAll(async() => {
     await mongoose.connection.close();

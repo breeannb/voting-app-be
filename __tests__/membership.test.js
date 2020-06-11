@@ -56,7 +56,6 @@ afterAll(async() => {
 
 describe('membership routes', () => {
 
-  // the create route will be used to create a new membership
   it('creates a membership via POST', async() => {
 
     return request(app)
@@ -75,9 +74,6 @@ describe('membership routes', () => {
       });
       
   });
-
-  // (/api/v1/memberships?org=ORG_ID) the get all route will be used to see all users in an organization (_id, name, and imageUrl only)
-  // if no organization id is provided send an error
 
   it('can get all users(pizzas) with a particular organization via GET', async() => {
     await Membership.create([
@@ -115,7 +111,6 @@ describe('membership routes', () => {
       });
   });
 
-  // // the delete route will be used to remove a membership
   it('deletes a membership', async() => {
     
     await Membership.create({

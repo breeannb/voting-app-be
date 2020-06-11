@@ -19,7 +19,6 @@ beforeEach(() => {
   return mongoose.connection.dropDatabase();
 });
 
-//create an organization
 let organization;
 beforeEach(async() => {
   organization = await Organization.create({
@@ -29,7 +28,6 @@ beforeEach(async() => {
   });
 });
 
-//create one poll
 let poll;
 beforeEach(async() => {
   poll = await Poll.create({
@@ -40,7 +38,6 @@ beforeEach(async() => {
   });
 });
   
-//create one user
 let userOne;
 beforeEach(async() => {
   userOne = await User.create({
@@ -51,18 +48,6 @@ beforeEach(async() => {
     communicationMedium: 'email'
   });
 });
-
-// //create second user
-// let userTwo;
-// beforeEach(async() => {
-//   userTwo = await User.create({
-//     name: 'Sam', 
-//     phone: '(570)404-5232', 
-//     email: 'sam@sam.com', 
-//     imageUrl: 'image12.com',
-//     communicationMedium: 'email'
-//   });
-// });
   
 afterAll(async() => {
   await mongoose.connection.close();
@@ -72,7 +57,6 @@ afterAll(async() => {
 
 describe('vote routes', () => {
 
-  // the create route will be used to create a new vote
   it('creates a new vote using POST', () => {
 
     return request(app)
@@ -94,7 +78,6 @@ describe('vote routes', () => {
 
   });
 
-  // the update route will be used to change the voted option 
   it('updates a vote by id via PATCH', () => {
     return Vote.create({
       poll: poll.id,

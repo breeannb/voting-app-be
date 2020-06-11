@@ -33,7 +33,6 @@ describe('poll routes', () => {
     return mongod.stop();
   });
 
-  //   the create route will be used to create a new poll
   it('create a poll via POST', async() => {
     return request(app)
       .post('/api/v1/polls')
@@ -56,7 +55,6 @@ describe('poll routes', () => {
       });
   });
 
-  // the get all route will be used to see all polls for an organization (_id and title only)
   it('gets all polls via GET', () => {
     return Poll.create({
       organization: organization._id,
@@ -74,7 +72,6 @@ describe('poll routes', () => {
       });
   }); 
 
-  // the get by id route will be used to get details about a poll (populate organization information)
   it('gets a poll by id via GET', () => {
     return Poll.create({
       organization: organization._id,
@@ -101,7 +98,6 @@ describe('poll routes', () => {
       });
   });
   
-  // the update route will be used to update a polls title and/or description
   it('updates a poll by id via PATCH', () => {
     return Poll.create({
       organization: organization._id,
@@ -127,7 +123,6 @@ describe('poll routes', () => {
       });
   });
  
-  // the delete route will be used to remove a poll
   it('deletes a polls by id via DELETE', () => {
     return Poll.create({
       organization: organization._id,
