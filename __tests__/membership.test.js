@@ -80,12 +80,37 @@ describe('membership routes', () => {
   // if no organization id is provided send an error
 
   it('can get all users(pizzas) with a particular organization via GET', async() => {
+    await Membership.create([
+      {
+        organization: organization._id,
+        user: userOne._id
+      }, 
+      {
+        organization: organization._id,
+        user: userTwo._id
+      }
+    ]);
     return request(app)
       .get(`/api/v1/memberships?organization=${organization._id}`)
       .then(res => {
         expect(res.body).toEqual([{
           _id: expect.anything(),
-          name: 'The Great'
+          organization: expect.anything(),
+          user: {
+            _id: userOne._id, 
+            name: 'Sally', 
+            imageUrl: 'image11.com'
+          }, 
+          __v: 0
+        }, {
+          _id: expect.anything(),
+          organization: expect.anything(),
+          user: {
+            _id: userTwo._id,
+            name: 'Sam', 
+            imageUrl: 'image12.com'
+          }, 
+          __v: 0
         }]);
       });
   });
