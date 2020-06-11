@@ -115,19 +115,20 @@ describe('membership routes', () => {
       });
   });
 
-  // the delete route will be used to remove a membership
+  // // the delete route will be used to remove a membership
   it('deletes a membership', async() => {
+    
     await Membership.create({
-      organization: organization._id, 
-      user: userOne._id
+      organization: organization._id,
+      user: userOne.id
     })
-      .then(membership => request(app).delete(`api/v1/memberships/${membership._id}`))
+      .then(membership => request(app).delete(`/api/v1/memberships/${membership._id}`))
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
           organization: expect.anything(), 
-          user: expect.anything(), 
-          __v:0
+          user: expect.anything(),
+          __v: 0
         });
       });
   });
