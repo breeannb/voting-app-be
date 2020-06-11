@@ -28,6 +28,7 @@ describe('user routes', () => {
       name: 'Breeann B',
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
+      imageUrl: 'image10.com',
       communicationMedium: 'email'
     })
       .then(user => request(app).get(`/api/v1/users/${user._id}`))
@@ -37,6 +38,7 @@ describe('user routes', () => {
           name: 'Breeann B',
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
           communicationMedium: 'email',
           __v: 0
         });
@@ -48,6 +50,7 @@ describe('user routes', () => {
       name: 'Breeann B',
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
+      imageUrl: 'image10.com',
       communicationMedium: 'email'
     })
       .then(user => {
@@ -61,6 +64,7 @@ describe('user routes', () => {
           name: 'Breeann B',
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
           communicationMedium: 'phone',
           __v: 0
         });
@@ -73,6 +77,7 @@ describe('user routes', () => {
         name: 'Breeann B',
         phone: '(570)404-5230', 
         email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
         communicationMedium: 'email'
       })
       .then(user => request(app).delete(`/api/v1/users/${user._id}`))
@@ -82,6 +87,7 @@ describe('user routes', () => {
           name: 'Breeann B',
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
           communicationMedium: 'email',
           __v: 0
         });

@@ -33,6 +33,7 @@ beforeEach(async() => {
     name: 'Sally', 
     phone: '(570)404-5231', 
     email: 'sally@sally.com', 
+    imageUrl: 'image11.com',
     communicationMedium: 'email'
   });
 });
@@ -43,6 +44,7 @@ beforeEach(async() => {
     name: 'Sam', 
     phone: '(570)404-5232', 
     email: 'sam@sam.com', 
+    imageUrl: 'image12.com',
     communicationMedium: 'email'
   });
 });
@@ -75,8 +77,18 @@ describe('membership routes', () => {
   });
 
   // (/api/v1/memberships?org=ORG_ID) the get all route will be used to see all users in an organization (_id, name, and imageUrl only)
-
   // if no organization id is provided send an error
+
+  it('can get all users(pizzas) with a particular organization via GET', async() => {
+    return request(app)
+      .get(`/api/v1/memberships?organization=${organization._id}`)
+      .then(res => {
+        expect(res.body).toEqual([{
+          _id: expect.anything(),
+          name: 'The Great'
+        }]);
+      });
+  });
 
   // the delete route will be used to remove a membership 
 });
