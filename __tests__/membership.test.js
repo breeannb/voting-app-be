@@ -6,39 +6,72 @@ const connect = require('../lib/utils/connect.js');
 const request = require('supertest'); 
 const app = require('../lib/app'); 
 const Membership = require('../lib/models/Membership'); 
+const Organization = require('../lib/models/Organization');
+const User = require('../lib/models/User');
+
+beforeAll(async() => {
+  const uri = await mongod.getUri();
+  return connect(uri);
+});
+
+beforeEach(() => {
+  return mongoose.connection.dropDatabase();
+});
+
+let organization;
+beforeEach(async() => {
+  organization = await Organization.create({
+    title: 'League of Women Voters Organization',
+    description: 'League of Women Group for Voting Info',
+    imageUrl: 'image2.com'
+  });
+});
+
+let userOne;
+beforeEach(async() => {
+  userOne = await User.create({
+    name: 'Sally', 
+    phone: '(570)404-5231', 
+    email: 'sally@sally.com', 
+    communicationMedium: 'email'
+  });
+});
+
+let userTwo;
+beforeEach(async() => {
+  userTwo = await User.create({
+    name: 'Sam', 
+    phone: '(570)404-5232', 
+    email: 'sam@sam.com', 
+    communicationMedium: 'email'
+  });
+});
+
+afterAll(async() => {
+  await mongoose.connection.close();
+  return mongod.stop();
+});
 
 describe('membership routes', () => {
 
-  beforeAll(async() => {
-    const uri = await mongod.getUri();
-    return connect(uri);
-  });
-    
-  beforeEach(() => {
-    return mongoose.connection.dropDatabase();
-  });
-
-  afterAll(async() => {
-    await mongoose.connection.close();
-    return mongod.stop();
-  });
-
   // the create route will be used to create a new membership
-  it('create a membership via POST', () => {
+  it('creates a membership via POST', async() => {
+
     return request(app)
-      .post('/api/v1/membership')
+      .post('/api/v1/memberships')
       .send({
-        organization: 'League of Women Voters Organization',
-        user: 'Sally'
+        organization: organization.id,
+        user: userOne.id,
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
-          organization: 'League of Women Voters Organization',
-          user: 'Sally', 
+          organization: organization.id,
+          user: userOne.id, 
           __v: 0
         });
       });
+      
   });
 
   // (/api/v1/memberships?org=ORG_ID) the get all route will be used to see all users in an organization (_id, name, and imageUrl only)
@@ -46,5 +79,4 @@ describe('membership routes', () => {
   // if no organization id is provided send an error
 
   // the delete route will be used to remove a membership 
-  
-}); 
+});
