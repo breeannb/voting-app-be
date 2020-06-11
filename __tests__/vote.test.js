@@ -102,8 +102,8 @@ describe('vote routes', () => {
       options: 'Yes',
     })
       .then(vote => {
-        return request(vote)
-          .patch(`/api/v1/votes?user_id=${vote._id}`)
+        return request(app)
+          .patch(`/api/v1/votes/${vote._id}`)
           .send({ options: 'No' });
       })
       .then(res => {
