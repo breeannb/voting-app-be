@@ -112,21 +112,16 @@ describe('poll routes', () => {
     })
       .then(poll => {
         return request(app)
-          .patch(`/api/v1/poll/${poll._id}`)
+          .patch(`/api/v1/polls/${poll._id}`)
           .send({ title: 'A Whole New Title', description: 'A Whole New Description' });
       })
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
-          organization: {
-            _id: organization.id,
-            title: 'Environmental Organization for Voters',
-            description: 'A Voting Party for Environmental Factors',
-            imageUrl: 'image1.com'
-          },
+          organization: organization.id,
           title: 'A Whole New Title',
           description: 'A Whole New Description', 
-          options: 'Yes',
+          options: 'Yes', 
           __v: 0
         });
       });
