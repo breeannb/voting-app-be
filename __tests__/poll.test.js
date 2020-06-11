@@ -126,8 +126,7 @@ describe('poll routes', () => {
         });
       });
   });
-  
-  // the delete route will be used to remove a poll
+ 
   // the delete route will be used to remove a poll
   it('deletes a polls by id via DELETE', () => {
     return Poll.create({
@@ -141,7 +140,7 @@ describe('poll routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
-          organization: organization._id,
+          organization: organization.id,
           title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
           description: 'A vote for the Owls, please give a Hoot', 
           options: 'Yes', 
