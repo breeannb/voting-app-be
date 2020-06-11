@@ -76,8 +76,7 @@ describe('organization routes', () => {
           _id: expect.anything(),
           title: 'Environmental Voter Project 1', 
           description: 'description1', 
-          imageUrl: 'image1.com',
-          __v: 0
+          imageUrl: 'image1.com'
         });
       });
 
@@ -99,8 +98,7 @@ describe('organization routes', () => {
           _id: expect.anything(),
           title: 'Environmental Voter Project 1', 
           description: 'description2', 
-          imageUrl: 'image2.com',
-          __v: 0
+          imageUrl: 'image2.com'
         });
       });
   });
@@ -118,8 +116,7 @@ describe('organization routes', () => {
           _id: expect.anything(),
           title: 'Environmental Voter Project 1', 
           description: 'description1', 
-          imageUrl: 'image1.com',
-          __v: 0
+          imageUrl: 'image1.com'
         });
       });
   });
