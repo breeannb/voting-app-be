@@ -202,7 +202,8 @@ describe('poll routes', () => {
       .delete(`/api/v1/polls/${poll._id}`)
       .then(res => {
         expect(res.body).toEqual({
-          organization: organization._id,
+          _id: expect.anything(),
+          organization: organization.id,
           title: 'Poll 1 Title',
           description: 'Poll 1 Description', 
           options: 'Yes', 
