@@ -132,8 +132,7 @@ describe('membership routes', () => {
   
   // });
 
-  // // when deleting an organization also delete all polls and votes associated with the organization
-  it('deletes an owner and all organizations and polls associated with owner', async() => {
+  it('deletes an membership and all votes made by that member', async() => {
     const membership = await Membership.create({
       organization: organization.id,
       user: userOne.id, 
@@ -164,9 +163,9 @@ describe('membership routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
-          title: 'Environmental Voter Project 1', 
-          description: 'description1', 
-          imageUrl: 'image1.com'
+          organization: organization.id,
+          user: userOne.id,
+          __v: 0
         });
 
         return Vote.find({ membership: membership._id });
