@@ -113,25 +113,6 @@ describe('membership routes', () => {
       });
   });
 
-  //   it('deletes a membership', async() => {
-    
-  //     await Membership.create({
-  //       organization: organization._id,
-  //       user: userOne.id
-  //     })
-  //       .then(membership => request(app).delete(`/api/v1/memberships/${membership._id}`))
-  //       .then(res => {
-  //         expect(res.body).toEqual({
-  //           _id: expect.anything(),
-  //           organization: expect.anything(), 
-  //           user: expect.anything(),
-  //           __v: 0
-  //         });
-  //       });
-  //   });
-  
-  // });
-
   it('deletes an membership and all votes made by that member', async() => {
     const membership = await Membership.create({
       organization: organization.id,
@@ -174,6 +155,5 @@ describe('membership routes', () => {
         expect(votes).toEqual([]);
       });
   });
-  
   
 });

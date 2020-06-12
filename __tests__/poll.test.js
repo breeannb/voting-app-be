@@ -146,29 +146,6 @@ describe('poll routes', () => {
         });
       });
   });
- 
-  // it('deletes a polls by id via DELETE', () => {
-  //   return Poll.create({
-  //     organization: organization._id,
-  //     title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
-  //     description: 'A vote for the Owls, please give a Hoot', 
-  //     options: 'Yes', 
-  //     __v: 0
-  //   })
-  //     .then(poll => request(app).delete(`/api/v1/polls/${poll._id}`))
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         _id: expect.anything(),
-  //         organization: organization.id,
-  //         title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
-  //         description: 'A vote for the Owls, please give a Hoot', 
-  //         options: 'Yes', 
-  //         __v: 0
-  //       });
-  //     });
-  // });
-
-  //deletes a poll and then deletes votes associated with poll 
 
   it('deletes a poll and deletes votes associated with poll', async() => {
     const organization = await Organization.create({
