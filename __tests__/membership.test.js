@@ -8,6 +8,8 @@ const app = require('../lib/app');
 const Membership = require('../lib/models/Membership'); 
 const Organization = require('../lib/models/Organization');
 const User = require('../lib/models/User');
+const Vote = require('../lib/models/Vote');
+const Poll = require('../lib/models/Poll');
 
 beforeAll(async() => {
   const uri = await mongod.getUri();
@@ -130,23 +132,49 @@ describe('membership routes', () => {
   
   // });
 
+  // // when deleting an organization also delete all polls and votes associated with the organization
+  it('deletes an owner and all organizations and polls associated with owner', async() => {
+    const membership = await Membership.create({
+      organization: organization.id,
+      user: userOne.id, 
+    });
 
-  // // when deleting a membership also delete all votes made by that member
-  // it('deletes a membership', async() => {
-    
-  //   await Membership.create({
-  //     organization: organization._id,
-  //     user: userOne.id
-  //   })
-  //     .then(membership => request(app).delete(`/api/v1/memberships/${membership._id}`))
-  //     .then(res => {
-  //       expect(res.body).toEqual({
-  //         _id: expect.anything(),
-  //         organization: expect.anything(), 
-  //         user: expect.anything(),
-  //         __v: 0
-  //       });
-  //     });
-  // });
+    const poll = await Poll.create({
+      organization: organization._id,
+      title: 'A Poll to Save Older Forests, the Owl\'s Habitat',
+      description: 'A vote for the Owls, please give a Hoot', 
+      options: 'Yes'
+    });
+
+    await Vote.create([
+      {
+        poll: poll.id,
+        user: userOne.id,
+        options: 'Yes',
+      },
+      {
+        poll: poll.id,
+        user: userTwo.id,
+        options: 'Yes',
+      }
+    ]);
+
+    return request(app)
+      .delete(`/api/v1/memberships/${membership._id}`)
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          title: 'Environmental Voter Project 1', 
+          description: 'description1', 
+          imageUrl: 'image1.com'
+        });
+
+        return Vote.find({ membership: membership._id });
+      })
+      .then(votes => {
+        expect(votes).toEqual([]);
+      });
+  });
+  
   
 });
