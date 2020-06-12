@@ -144,4 +144,6 @@ describe('poll routes', () => {
       });
   });
 
+  //deletes a poll and then deletes votes associated with poll 
+
 });
