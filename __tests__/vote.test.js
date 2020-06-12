@@ -78,6 +78,33 @@ describe('vote routes', () => {
 
   });
 
+  it('updates a vote if it already exists with POST', async() => {
+
+    const vote = await Vote.create ({
+      poll: poll.id,
+      user: userOne.id,
+      options: 'No',
+    });
+
+    return request(app)
+      .post('/api/v1/votes')
+      .send({
+        poll: poll.id,
+        user: userOne.id,
+        options: 'Yes',
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: vote.id,
+          poll: poll.id,
+          user: userOne.id, 
+          options: 'Yes',
+          __v: 0
+        });
+      });
+
+  });
+
   it('updates a vote by id via PATCH', () => {
     return Vote.create({
       poll: poll.id,

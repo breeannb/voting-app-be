@@ -23,7 +23,7 @@ describe('user routes', () => {
     return mongod.stop();
   });
 
-  it('gets all users and organizations by id via GET', () => {
+  it('gets all user info and organizations by id via GET', () => {
     return User.create({
       name: 'Breeann B',
       phone: '(570)404-5230', 
@@ -37,7 +37,6 @@ describe('user routes', () => {
           _id: expect.anything(),
           name: 'Breeann B',
           memberships: [],
-          // members: [],
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           imageUrl: 'image10.com',
