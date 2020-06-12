@@ -23,9 +23,10 @@ describe('user routes', () => {
     return mongod.stop();
   });
 
-  it('gets an user by id via GET', () => {
+  it('gets a user by id via GET', () => {
     return User.create({
       name: 'Breeann B',
+      organizations: [],
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
       imageUrl: 'image10.com',
@@ -39,8 +40,7 @@ describe('user routes', () => {
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           imageUrl: 'image10.com',
-          communicationMedium: 'email',
-          __v: 0
+          communicationMedium: 'email'
         });
       });
   });
@@ -65,8 +65,7 @@ describe('user routes', () => {
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           imageUrl: 'image10.com',
-          communicationMedium: 'phone',
-          __v: 0
+          communicationMedium: 'phone'
         });
       });
   });
@@ -88,8 +87,7 @@ describe('user routes', () => {
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           imageUrl: 'image10.com',
-          communicationMedium: 'email',
-          __v: 0
+          communicationMedium: 'email'
         });
       });
   });
