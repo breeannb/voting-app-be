@@ -23,10 +23,9 @@ describe('user routes', () => {
     return mongod.stop();
   });
 
-  it('gets a user by id via GET', () => {
+  it('gets all users and organizations by id via GET', () => {
     return User.create({
       name: 'Breeann B',
-      organizations: [],
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
       imageUrl: 'image10.com',
@@ -37,6 +36,8 @@ describe('user routes', () => {
         expect(res.body).toEqual({
           _id: expect.anything(),
           name: 'Breeann B',
+          memberships: [],
+          // members: [],
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
           imageUrl: 'image10.com',
