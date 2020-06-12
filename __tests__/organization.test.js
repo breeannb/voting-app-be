@@ -6,6 +6,8 @@ const request = require('supertest');
 const app = require('../lib/app'); 
 const Organization = require('../lib/models/Organization'); 
 const Poll = require('../lib/models/Poll'); 
+const User = require('../lib/models/User'); 
+const Membership = require('../lib/models/Membership'); 
 
 describe('organization routes', () => {
 
@@ -16,6 +18,28 @@ describe('organization routes', () => {
     
   beforeEach(() => {
     return mongoose.connection.dropDatabase();
+  });
+
+  let userOne;
+  beforeEach(async() => {
+    userOne = await User.create({
+      name: 'Sally', 
+      phone: '(570)404-5231', 
+      email: 'sally@sally.com', 
+      imageUrl: 'image11.com',
+      communicationMedium: 'email'
+    });
+  });
+
+  let userTwo;
+  beforeEach(async() => {
+    userTwo = await User.create({
+      name: 'Sam', 
+      phone: '(570)404-5232', 
+      email: 'sam@sam.com', 
+      imageUrl: 'image12.com',
+      communicationMedium: 'email'
+    });
   });
 
   afterAll(async() => {
@@ -41,23 +65,7 @@ describe('organization routes', () => {
       });
   });
 
-  it('gets all organizations via GET', () => {
-    return Organization.create({
-      title: 'Environmental Voter Project 1', 
-      description: 'description1', 
-      imageUrl: 'image1.com', 
-    })
-      .then(() => request(app).get('/api/v1/organizations'))
-      .then(res => {
-        expect(res.body).toEqual([{
-          _id: expect.anything(),
-          title: 'Environmental Voter Project 1', 
-          imageUrl: 'image1.com'
-        }]);
-      });
-  });
-
-  it('gets an organization by id with GET', () => {
+  it('gets an organization by id with memberships with GET', () => {
     return Organization.create({
       title: 'Environmental Voter Project 1', 
       description: 'description1', 
@@ -67,6 +75,7 @@ describe('organization routes', () => {
       .then(res => {
         expect(res.body).toEqual({
           _id: expect.anything(),
+          memberships: [],
           title: 'Environmental Voter Project 1', 
           description: 'description1', 
           imageUrl: 'image1.com'
@@ -96,23 +105,6 @@ describe('organization routes', () => {
       });
   });
 
-  // it('deletes an organization by id via DELETE', () => {
-  //   return Organization.create(
-  //     { 
-  //       title: 'Environmental Voter Project 1', 
-  //       description: 'description1', 
-  //       imageUrl: 'image1.com',
-  //     })
-  //     .then(organization => request(app).delete(`/api/v1/organizations/${organization._id}`))
-  //     .then(res => { 
-  //       expect(res.body).toEqual({
-  //         _id: expect.anything(),
-  //         title: 'Environmental Voter Project 1', 
-  //         description: 'description1', 
-  //         imageUrl: 'image1.com'
-  //       });
-  //     });
-  // });
 
   // // when deleting an organization also delete all polls and votes associated with the organization
   it('deletes an owner and all organizations and polls associated with owner', async() => {
@@ -155,5 +147,6 @@ describe('organization routes', () => {
         expect(polls).toEqual([]);
       });
   });
+
 
 }); 
