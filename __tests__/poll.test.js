@@ -37,7 +37,8 @@ describe('poll routes', () => {
       phone: '(570)404-5231', 
       email: 'sally@sally.com', 
       imageUrl: 'image11.com',
-      communicationMedium: 'email'
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
     });
   });
 
@@ -48,7 +49,8 @@ describe('poll routes', () => {
       phone: '(570)404-5232', 
       email: 'sam@sam.com', 
       imageUrl: 'image12.com',
-      communicationMedium: 'email'
+      communicationMedium: 'email',
+      passwordHash: 'password5678'
     });
   });
 

@@ -45,7 +45,8 @@ beforeEach(async() => {
     phone: '(570)404-5231', 
     email: 'sally@sally.com', 
     imageUrl: 'image11.com',
-    communicationMedium: 'email'
+    communicationMedium: 'email',
+    passwordHash: 'password1234'
   });
 });
   
@@ -53,7 +54,6 @@ afterAll(async() => {
   await mongoose.connection.close();
   return mongod.stop();
 });
-
 
 describe('vote routes', () => {
 

@@ -17,6 +17,18 @@ describe('user routes', () => {
   beforeEach(() => {
     return mongoose.connection.dropDatabase();
   });
+
+  let userOne;
+  beforeEach(async() => {
+    userOne = await User.create({
+      name: 'Breeann B',
+      phone: '(570)404-5230', 
+      email: 'bolinskybm10@gmail.com',
+      imageUrl: 'image10.com',
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
+    });
+  });
     
   afterAll(async() => {
     await mongoose.connection.close();
@@ -29,7 +41,8 @@ describe('user routes', () => {
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
       imageUrl: 'image10.com',
-      communicationMedium: 'email'
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
     })
       .then(user => request(app).get(`/api/v1/users/${user._id}`))
       .then(res => {
@@ -51,7 +64,8 @@ describe('user routes', () => {
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
       imageUrl: 'image10.com',
-      communicationMedium: 'email'
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
     })
       .then(user => {
         return request(app)
@@ -77,7 +91,8 @@ describe('user routes', () => {
         phone: '(570)404-5230', 
         email: 'bolinskybm10@gmail.com',
         imageUrl: 'image10.com',
-        communicationMedium: 'email'
+        communicationMedium: 'email',
+        passwordHash: 'password1234'
       })
       .then(user => request(app).delete(`/api/v1/users/${user._id}`))
       .then(res => { 
