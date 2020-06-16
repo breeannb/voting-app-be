@@ -28,7 +28,7 @@ describe('user routes', () => {
       email: 'bolinskybm10@gmail.com',
       imageUrl: 'image10.com',
       communicationMedium: 'email',
-      passwordHash: 'password1234'
+      password: 'password1234'
     });
   });
     
@@ -147,11 +147,12 @@ describe('user routes', () => {
         });
       });
   });
+  
 
   it('can login a user via POST', async() => {
 
     return request(app)
-      .post('/api/v1/auth/login')
+      .post('/api/v1/users/login')
       .send({
         name: 'Breeann B',
         phone: '(570)404-5230', 
