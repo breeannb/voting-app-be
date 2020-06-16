@@ -172,4 +172,34 @@ describe('user routes', () => {
         });
       });
   });
+
+  it('can verify if a user is logged in', async() => {
+    const agent = request.agent(app);
+
+    return agent
+      .post('/api/v1/users/login')
+      .send({
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
+        communicationMedium: 'email',
+        password: 'password1234'
+      })
+      .then(() => {
+        return agent
+          .get('/api/v1/users/verify');
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: userOne.id,
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'email',
+        });
+      });
+  });
+
 }); 
