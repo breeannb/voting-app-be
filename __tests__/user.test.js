@@ -147,4 +147,28 @@ describe('user routes', () => {
         });
       });
   });
+
+  it('can login a user via POST', async() => {
+
+    return request(app)
+      .post('/api/v1/auth/login')
+      .send({
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
+        communicationMedium: 'email',
+        password: 'password1234'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: userOne.id,
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'email',
+        });
+      });
+  });
 }); 
