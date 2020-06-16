@@ -7,6 +7,8 @@ const request = require('supertest');
 const app = require('../lib/app'); 
 const User = require('../lib/models/User.js'); 
 
+require('dotenv').config();
+
 describe('user routes', () => {
 
   beforeAll(async() => {
@@ -105,5 +107,21 @@ describe('user routes', () => {
           communicationMedium: 'email'
         });
       });
+  });
+
+  it('sets a password hash', () => {
+    expect(userOne.passwordHash).toEqual(expect.any(String));
+  });
+
+  it('has an authToken method', () => {
+    expect(userOne.authToken()).toEqual(expect.any(String));
+  });
+
+  it('can verify a token and return a user', () => {
+    
+    const token = userOne.authToken();
+    const verifiedUser = User.verifyToken(token);
+
+    expect(verifiedUser.toJSON()).toEqual(userOne.toJSON());
   });
 }); 
