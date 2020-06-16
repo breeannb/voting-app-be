@@ -124,4 +124,28 @@ describe('user routes', () => {
 
     expect(verifiedUser.toJSON()).toEqual(userOne.toJSON());
   });
+
+  it('can signup a new user via POST', () => {
+    return request(app)
+      .post('/api/v1/users/signup')
+      .send({
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
+        communicationMedium: 'email',
+        passwordHash: 'password1234'
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'email',
+          passwordHash: 'password1234'
+        });
+      });
+  });
 }); 
