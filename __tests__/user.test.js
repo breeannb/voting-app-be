@@ -20,9 +20,10 @@ describe('user routes', () => {
     return mongoose.connection.dropDatabase();
   });
 
-  let userOne;
+  const agent = request.agent(app);
+  let newUser;
   beforeEach(async() => {
-    userOne = await User.create({
+    newUser = await User.create({
       name: 'Breeann B',
       phone: '(570)404-5230', 
       email: 'bolinskybm10@gmail.com',
@@ -30,6 +31,17 @@ describe('user routes', () => {
       communicationMedium: 'email',
       password: 'password1234'
     });
+
+    return agent
+      .post('/api/v1/Users/signup')
+      .send({
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
+        communicationMedium: 'email',
+        password: 'password1234'
+      });
   });
     
   afterAll(async() => {
@@ -37,96 +49,8 @@ describe('user routes', () => {
     return mongod.stop();
   });
 
-  it('gets all user info and organizations by id via GET', () => {
-    return User.create({
-      name: 'Breeann B',
-      phone: '(570)404-5230', 
-      email: 'bolinskybm10@gmail.com',
-      imageUrl: 'image10.com',
-      communicationMedium: 'email',
-      passwordHash: 'password1234'
-    })
-      .then(user => request(app).get(`/api/v1/users/${user._id}`))
-      .then(res => {
-        expect(res.body).toEqual({
-          _id: expect.anything(),
-          name: 'Breeann B',
-          memberships: [],
-          phone: '(570)404-5230', 
-          email: 'bolinskybm10@gmail.com',
-          imageUrl: 'image10.com',
-          communicationMedium: 'email'
-        });
-      });
-  });
-
-  it('updates user by id using PATCH', () => {
-    return User.create({
-      name: 'Breeann B',
-      phone: '(570)404-5230', 
-      email: 'bolinskybm10@gmail.com',
-      imageUrl: 'image10.com',
-      communicationMedium: 'email',
-      passwordHash: 'password1234'
-    })
-      .then(user => {
-        return request(app)
-          .patch(`/api/v1/users/${user._id}`)
-          .send({ communicationMedium: 'phone' });
-      })
-      .then(res => {
-        expect(res.body).toEqual({
-          _id: expect.anything(),
-          name: 'Breeann B',
-          phone: '(570)404-5230', 
-          email: 'bolinskybm10@gmail.com',
-          imageUrl: 'image10.com',
-          communicationMedium: 'phone'
-        });
-      });
-  });
-
-  it('deletes an user by id via DELETE', () => {
-    return User.create(
-      { 
-        name: 'Breeann B',
-        phone: '(570)404-5230', 
-        email: 'bolinskybm10@gmail.com',
-        imageUrl: 'image10.com',
-        communicationMedium: 'email',
-        passwordHash: 'password1234'
-      })
-      .then(user => request(app).delete(`/api/v1/users/${user._id}`))
-      .then(res => { 
-        expect(res.body).toEqual({
-          _id: expect.anything(),
-          name: 'Breeann B',
-          phone: '(570)404-5230', 
-          email: 'bolinskybm10@gmail.com',
-          imageUrl: 'image10.com',
-          communicationMedium: 'email'
-        });
-      });
-  });
-
-  it('sets a password hash', () => {
-    expect(userOne.passwordHash).toEqual(expect.any(String));
-  });
-
-  it('has an authToken method', () => {
-    expect(userOne.authToken()).toEqual(expect.any(String));
-  });
-
-  it('can verify a token and return a user', () => {
-    
-    const token = userOne.authToken();
-    const verifiedUser = User.verifyToken(token);
-
-    expect(verifiedUser.toJSON()).toEqual(userOne.toJSON());
-  });
-
   it('can signup a new user via POST', () => {
-    return request(app)
+    return agent
       .post('/api/v1/users/signup')
       .send({
         name: 'Breeann B',
@@ -151,7 +75,7 @@ describe('user routes', () => {
 
   it('can login a user via POST', async() => {
 
-    return request(app)
+    return agent
       .post('/api/v1/users/login')
       .send({
         name: 'Breeann B',
@@ -163,7 +87,7 @@ describe('user routes', () => {
       })
       .then(res => {
         expect(res.body).toEqual({
-          _id: userOne.id,
+          _id: newUser.id,
           name: 'Breeann B',
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
@@ -192,7 +116,7 @@ describe('user routes', () => {
       })
       .then(res => {
         expect(res.body).toEqual({
-          _id: userOne.id,
+          _id: newUser.id,
           name: 'Breeann B',
           phone: '(570)404-5230', 
           email: 'bolinskybm10@gmail.com',
@@ -201,5 +125,94 @@ describe('user routes', () => {
         });
       });
   });
+
+  it('gets all user info and organizations by id via GET', async() => {
+    return User.create({
+      name: 'Breeann B',
+      phone: '(570)404-5230', 
+      email: 'bolinskybm10@gmail.com',
+      imageUrl: 'image10.com',
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
+    })
+      .then(user => agent.get(`/api/v1/users/${user._id}`))
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          memberships: [],
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'email'
+        });
+      });
+  });
+
+  it('updates user by id using PATCH', () => {
+    return User.create({
+      name: 'Breeann B',
+      phone: '(570)404-5230', 
+      email: 'bolinskybm10@gmail.com',
+      imageUrl: 'image10.com',
+      communicationMedium: 'email',
+      passwordHash: 'password1234'
+    })
+      .then(user => {
+        return agent
+          .patch(`/api/v1/users/${user._id}`)
+          .send({ communicationMedium: 'phone' });
+      })
+      .then(res => {
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'phone'
+        });
+      });
+  });
+
+  it('deletes an user by id via DELETE', () => {
+    return User.create(
+      { 
+        name: 'Breeann B',
+        phone: '(570)404-5230', 
+        email: 'bolinskybm10@gmail.com',
+        imageUrl: 'image10.com',
+        communicationMedium: 'email',
+        passwordHash: 'password1234'
+      })
+      .then(user => agent.delete(`/api/v1/users/${user._id}`))
+      .then(res => { 
+        expect(res.body).toEqual({
+          _id: expect.anything(),
+          name: 'Breeann B',
+          phone: '(570)404-5230', 
+          email: 'bolinskybm10@gmail.com',
+          imageUrl: 'image10.com',
+          communicationMedium: 'email'
+        });
+      });
+  });
+
+  it('sets a password hash', () => {
+    expect(newUser.passwordHash).toEqual(expect.any(String));
+  });
+
+  it('has an authToken method', () => {
+    expect(newUser.authToken()).toEqual(expect.any(String));
+  });
+
+  it('can verify a token and return a user', () => {
+    
+    const token = newUser.authToken();
+    const verifiedUser = User.verifyToken(token);
+
+    expect(verifiedUser.toJSON()).toEqual(newUser.toJSON());
+  });
+
 
 }); 
