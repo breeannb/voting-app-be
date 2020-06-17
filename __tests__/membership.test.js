@@ -37,7 +37,7 @@ beforeEach(async() => {
     email: 'sally@sally.com', 
     imageUrl: 'image11.com',
     communicationMedium: 'email',
-    passwordHash: 'password1234'
+    password: 'password1234'
   });
 });
 
@@ -49,7 +49,7 @@ beforeEach(async() => {
     email: 'sam@sam.com', 
     imageUrl: 'image12.com',
     communicationMedium: 'email',
-    passwordHash: 'password5678'
+    password: 'password5678'
   });
 });
 

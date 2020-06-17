@@ -33,7 +33,7 @@ describe('user routes', () => {
     });
 
     return agent
-      .post('/api/v1/Users/signup')
+      .post('/api/v1/users/signup')
       .send({
         name: 'Breeann B',
         phone: '(570)404-5230', 
@@ -72,7 +72,6 @@ describe('user routes', () => {
       });
   });
   
-
   it('can login a user via POST', async() => {
 
     return agent
@@ -213,6 +212,4 @@ describe('user routes', () => {
 
     expect(verifiedUser.toJSON()).toEqual(newUser.toJSON());
   });
-
-
 }); 
