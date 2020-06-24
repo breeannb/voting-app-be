@@ -15,9 +15,9 @@ beforeEach(() => {
   return mongoose.connection.dropDatabase();
 });
 
-// beforeEach(() => {
-//   return seed({ author: 2, books: 5 });
-// });
+beforeEach(() => {
+  return seed({ organizations = 5, users = 25, polls = 10, memberships = 5, votes = 100 });
+});
 
 afterAll(async() => {
   await mongoose.connection.close();

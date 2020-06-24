@@ -4,28 +4,25 @@ const User = require('../lib/models/User');
 const Poll = require('../lib/models/Poll');
 const Vote = require('../lib/models/Vote');
 const Membership = require('../lib/models/Membership');
-require('dotenv').config();
-require('../lib/utils/connect');
-const mongoose = require('mongoose'); 
 
-const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5,  } =  {}) => {
+const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5, votes = 100 } =  {}) => {
   const communicationMediums = ['phone', 'email'];
-  const options = ['option1', 'option2', 'option3']; 
+  const voteOptions = ['option1', 'option2', 'option3']; 
   const pollOptions = ['Yes', 'No'];
 
   const createdOrganizations = await Organization.create([...Array(organizations)].map(() => ({
     title: chance.name(),
     description: chance.paragraph({ sentences: 3 }),
-    imageURL: chance.animal()
+    imageUrl: chance.animal()
   })));
 
   const createdUsers = await User.create([...Array(users)].map(() => ({
     name: chance.name(),
     phone: chance.phone(),
-    email: chance.animal(), 
+    email: chance.email(), 
     passwordHash: chance.animal(),
-    imageURL: chance.animal(), 
-    communicationMedium: chance.pickset(communicationMediums, chance.natural({ min: 1, max: 1 })),
+    imageUrl: chance.animal(), 
+    communicationMedium: chance.pickone(communicationMediums)
   })));
 
   const createdPolls = await Poll.create([...Array(polls)].map(() => ({
@@ -33,7 +30,7 @@ const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5,
     title: chance.string({ length: 5 }),
     description: chance.paragraph({ sentences: 2 }), 
     passwordHash: chance.animal(),
-    options: chance.pickset(pollOptions, chance.natural({ min: 1, max: 1 }))
+    options: chance.pickone(pollOptions, chance.natural({ min: 1, max: 1 }))
   })));
 
   await Membership.create([...Array(memberships)].map(() => ({
@@ -41,19 +38,13 @@ const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5,
     user: chance.pickone(createdUsers).id
   })));
 
-  await Vote.create([...Array(polls)].map(() => ({
+  await Vote.create([...Array(votes)].map(() => ({
     poll: chance.pickone(createdPolls).id, 
     user: chance.pickone(createdUsers).id,
-    options: chance.pickset(options, chance.natural({ min: 1, max: 1 }))
+    options: chance.pickone(voteOptions)
   })));
-
-
 };
 
-seed()
-  .then(() => {
-    mongoose.connection.close(); 
-  });
 module.exports = {
   seed
 };
