@@ -5,7 +5,7 @@ const Poll = require('../lib/models/Poll');
 const Vote = require('../lib/models/Vote');
 const Membership = require('../lib/models/Membership');
 
-const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5, votes = 100 } =  {}) => {
+module.exports = async({ organizations = 30, users = 50, polls = 20, memberships = 70, votes = 120 } =  {}) => {
   const communicationMediums = ['phone', 'email'];
   const voteOptions = ['option1', 'option2', 'option3']; 
   const pollOptions = ['Yes', 'No'];
@@ -27,7 +27,7 @@ const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5,
 
   const createdPolls = await Poll.create([...Array(polls)].map(() => ({
     organization: chance.pickone(createdOrganizations).id, 
-    title: chance.string({ length: 5 }),
+    title: chance.name(),
     description: chance.paragraph({ sentences: 2 }), 
     passwordHash: chance.animal(),
     options: chance.pickone(pollOptions, chance.natural({ min: 1, max: 1 }))
@@ -45,6 +45,3 @@ const seed = async({ organizations = 5, users = 25, polls = 10, memberships = 5,
   })));
 };
 
-module.exports = {
-  seed
-};
